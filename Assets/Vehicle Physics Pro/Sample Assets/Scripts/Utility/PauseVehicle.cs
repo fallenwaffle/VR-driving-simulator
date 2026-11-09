@@ -31,7 +31,8 @@ public class PauseVehicle : VehicleBehaviour
 
 		if (pause && !m_pausedState)
 			{
-			m_velocity = vehicle.cachedRigidbody.velocity;
+			// Unity 6 compatibility: use linearVelocity instead of velocity
+			m_velocity = vehicle.cachedRigidbody.linearVelocity;
 			m_angularVelocity = vehicle.cachedRigidbody.angularVelocity;
 
 			m_pausedState = true;
@@ -44,7 +45,8 @@ public class PauseVehicle : VehicleBehaviour
 			vehicle.cachedRigidbody.isKinematic = false;
             vehicle.paused = false;
 
-			vehicle.cachedRigidbody.velocity = m_velocity;
+			// Unity 6 compatibility: use linearVelocity instead of velocity
+			vehicle.cachedRigidbody.linearVelocity = m_velocity;
 			vehicle.cachedRigidbody.angularVelocity = m_angularVelocity;
 
 			m_pausedState = false;

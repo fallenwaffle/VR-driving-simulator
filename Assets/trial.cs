@@ -48,7 +48,8 @@ public class trial : MonoBehaviour
         brakeInput = context.ReadValue<float>();
 
         // If car is stopped and brake is pressed, enter reverse mode
-        if (brakeInput > 0 && carRigidbody.velocity.magnitude < 0.1f)
+        // Use linearVelocity for Unity 6 compatibility (same as velocity in older versions)
+        if (brakeInput > 0 && carRigidbody.linearVelocity.magnitude < 0.1f)
         {
             isReversing = true;
         }
