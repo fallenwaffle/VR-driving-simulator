@@ -24,8 +24,8 @@ public class SignalZone : MonoBehaviour
     private void Start()
     {
         // Find the WorkSamplingObserver in the scene
-        // Unity 6 compatibility: use FindFirstObjectByType instead of FindObjectOfType
-        observer = FindFirstObjectByType<WorkSamplingObserver>();
+        // Unity 6 compatibility: use FindAnyObjectByType
+        observer = FindAnyObjectByType<WorkSamplingObserver>();
 
         if (observer == null)
         {

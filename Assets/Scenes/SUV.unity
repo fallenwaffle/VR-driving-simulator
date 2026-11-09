@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 0
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -96,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c80008392ef73a34a9e2ad66f712b0f0, type: 2}
   m_LightingSettings: {fileID: 1830636451}
 --- !u!196 &4
 NavMeshSettings:
@@ -1504,6 +1501,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -2013,8 +2011,7 @@ PrefabInstance:
 
         Reverse Gear
 
-        Increse
-        Gear
+        Increse Gear
 
         Neutral Gear
 
@@ -2048,8 +2045,7 @@ PrefabInstance:
 
         <b>Left White Key</b> and <b>A</b>
 
-        to
-        start the engine'
+        to start the engine'
       objectReference: {fileID: 0}
     - target: {fileID: 5741419463424709494, guid: 1bab401d9c9316e47a8181018e64851f, type: 3}
       propertyPath: m_Text
@@ -2057,15 +2053,13 @@ PrefabInstance:
 
         <b>White Key (Left) </b>
 
-        <b>White
-        Key (Right) </b>
+        <b>White Key (Right) </b>
 
         <b>B key</b>
 
         <b>X key</b>
 
-        <b>Y
-        key</b>
+        <b>Y key</b>
 
         <b>RB key</b>
 
@@ -2653,6 +2647,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -4940,15 +4935,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044190312}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 13
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8627451, a: 1}
   m_Intensity: 1.25
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -4992,8 +4986,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
+  m_ForceVisible: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &1044190314
 Transform:
   m_ObjectHideFlags: 0
@@ -6264,7 +6262,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11431438, guid: 2cd00faae1c08854f97acb5a87bb5f0d, type: 3}
-      propertyPath: text.Array.data[0]
+      propertyPath: 'text.Array.data[0]'
       value: <i><b><size=24>Vehicle Physics Pro</size></b></i>
       objectReference: {fileID: 0}
     - target: {fileID: 114715336954644824, guid: 2cd00faae1c08854f97acb5a87bb5f0d, type: 3}
@@ -7340,8 +7338,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Lighting Settings
-  serializedVersion: 6
-  m_GIWorkflowMode: 0
+  serializedVersion: 10
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -7351,9 +7348,17 @@ LightingSettings:
   m_UsingShadowmask: 1
   m_BakeBackend: 1
   m_LightmapMaxSize: 1024
+  m_LightmapSizeFixed: 0
+  m_UseMipmapLimits: 1
   m_BakeResolution: 40
   m_Padding: 2
   m_LightmapCompression: 3
+  m_LightmapPackingMode: 1
+  m_LightmapPackingMethod: 0
+  m_XAtlasPackingAttempts: 16384
+  m_XAtlasBruteForce: 0
+  m_XAtlasBlockAlign: 0
+  m_XAtlasRepackUnderutilizedLightmaps: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -7364,13 +7369,11 @@ LightingSettings:
   m_FilterMode: 1
   m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
+  m_EnableWorkerProcessBaking: 1
   m_TrainingDataDestination: TrainingData
   m_RealtimeResolution: 2
   m_ForceWhiteAlbedo: 0
   m_ForceUpdates: 0
-  m_FinalGather: 0
-  m_FinalGatherRayCount: 256
-  m_FinalGatherFiltering: 1
   m_PVRCulling: 1
   m_PVRSampling: 1
   m_PVRDirectSampleCount: 32
@@ -7394,9 +7397,15 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
-  m_PVRTiledBaking: 0
-  m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+  m_DirectLightSamplingMode: 2
+  m_DirectRISCandidateCount: 4
+  m_IndirectLightSamplingMode: 1
+  m_IndirectRISCandidateCount: 1
+  m_LightAccelerationStructure: 0
+  m_LightGridMaxCells: 262144
+  m_DirectEmissiveSamplingMode: 2
+  m_IndirectEmissiveSamplingMode: 1
 --- !u!1 &1844343072
 GameObject:
   m_ObjectHideFlags: 0
@@ -9434,8 +9443,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>Steering Assist</b>
 
-        Limits the steering angle to provide
-        the maximum cornering rate at the current speed.'
+        Limits the steering angle to provide the maximum cornering rate at the current speed.'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -9562,8 +9570,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>Telemetry Data</b>
 
-        Shows detailed numeric data on the vehicle
-        in runtime'
+        Shows detailed numeric data on the vehicle in runtime'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -9882,10 +9889,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "<b>Green:</b> Gas pedal \t\t\t<b>Red:</b> Brake pedal\n<b>Lime:</b> Engine
-    load\t\t\t<b>Orange:</b> Handbrake\n\n<b>Blue:</b> Clutch pedal\n<b>Alt blue:</b>
-    Transmission de-coupling (clutch, torque converter)\n\n<b>Cyan:</b> Steering
-    wheel input\n<b>Gray:</b> Assisted steering"
+  m_Text: "<b>Green:</b> Gas pedal \t\t\t<b>Red:</b> Brake pedal\n<b>Lime:</b> Engine load\t\t\t<b>Orange:</b> Handbrake\n\n<b>Blue:</b> Clutch pedal\n<b>Alt blue:</b> Transmission de-coupling (clutch, torque converter)\n\n<b>Cyan:</b> Steering wheel input\n<b>Gray:</b> Assisted steering"
 --- !u!114 &1541013435567019104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9925,19 +9929,16 @@ MonoBehaviour:
     Handbrake applied
 
 
-    Some safety aid
-    has been triggered (ABS, ESC, TCS, ASR)
+    Some safety aid has been triggered (ABS, ESC, TCS, ASR)
 
 
-    Retarder brake engaged (not installed
-    in this vehicle)
+    Retarder brake engaged (not installed in this vehicle)
 
 
     AWD differential lock enabled: axle, center, full.
 
 
-    2WD
-    differential lock enabled'
+    2WD differential lock enabled'
 --- !u!222 &1541013435567019105
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10464,11 +10465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7000201978217335538, guid: 06ccb6ed0e7344e42b14f8b1b4865461, type: 3}
       propertyPath: m_Text
-      value: "The Aids panel shows the state of the available safety and driving
-        aids\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<b>Color codes</b>\n\n\tGreen\t\t\tEnabled
-        and monitoring the car state\n\tYellow\t\tActuating on the car systems\n\tGray\t\t\tDisabled
-        (OFF) or not installed (N/A)\n\tBlue\t\t\tEnabled and actuating on the car
-        continuously"
+      value: "The Aids panel shows the state of the available safety and driving aids\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<b>Color codes</b>\n\n\tGreen\t\t\tEnabled and monitoring the car state\n\tYellow\t\tActuating on the car systems\n\tGray\t\t\tDisabled (OFF) or not installed (N/A)\n\tBlue\t\t\tEnabled and actuating on the car continuously"
       objectReference: {fileID: 0}
     - target: {fileID: 7000201978217335539, guid: 06ccb6ed0e7344e42b14f8b1b4865461, type: 3}
       propertyPath: m_SizeDelta.y
@@ -10672,8 +10669,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>TCS - Traction Control System</b>
 
-        Prevents loss of traction
-        by reducing the throttle input and engine torque.'
+        Prevents loss of traction by reducing the throttle input and engine torque.'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -11131,8 +11127,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>Ignition Key</b>
 
-        Controls the ignition key. Click to select
-        position.
+        Controls the ignition key. Click to select position.
 
 
 
@@ -11141,8 +11136,7 @@ PrefabInstance:
 
         <b>Input Monitor</b>
 
-        Shows the main inputs
-        and states of the car.
+        Shows the main inputs and states of the car.
 
 
 
@@ -11156,9 +11150,7 @@ PrefabInstance:
 
         <b>Gear Mode Selector</b>
 
-        Used
-        in Automatic Transmission only. Click to select a specific gear mode or use
-        Page-Up/Page-Down to select next/prev mode.
+        Used in Automatic Transmission only. Click to select a specific gear mode or use Page-Up/Page-Down to select next/prev mode.
 
 
 
@@ -11170,8 +11162,7 @@ PrefabInstance:
 
         <b>Dashboard</b>
 
-        Shows
-        Speed, RPMs, engaged gear, and status signals.
+        Shows Speed, RPMs, engaged gear, and status signals.
 
 
 
@@ -11187,8 +11178,7 @@ PrefabInstance:
 
 
 
-        <b>Driving
-        Aids</b>
+        <b>Driving Aids</b>
 
         See the "Aids" section in the top menu.'
       objectReference: {fileID: 0}
@@ -11513,14 +11503,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<b>Welcome to Vehicle Physics Pro!</b>\r\nThe most realistic and advanced
-    vehicle simulation kit for Unity 3D.\r\n\r\nThis demo showcases the typical features
-    in a standard car:\r\n\r\n\u2022\tAll-Wheel-Drive (AWD) vs. Two-Wheel-Drive (2WD)\n\u2022\tManual
-    vs. Automatic transmission\r\n\u2022\tClutch vs. Torque Converter\r\n\u2022\tAuto-Shift
-    in manual transmission\r\n\u2022\tDifferential Lock\r, three levels: axles, center,
-    full\n\u2022\tEngine Stall\r\n\u2022\tDriver Assists: ABS, ESC, TCS, ASR\r\n\u2022\tSteering
-    Assist\r\n\r\nMore info on Vehicle Physics Pro:\r\n\r\n    vehiclephysics.com\r\n  
-    @vehiclephysics\r\n"
+  m_Text: "<b>Welcome to Vehicle Physics Pro!</b>\r\nThe most realistic and advanced vehicle simulation kit for Unity 3D.\r\n\r\nThis demo showcases the typical features in a standard car:\r\n\r\n\u2022\tAll-Wheel-Drive (AWD) vs. Two-Wheel-Drive (2WD)\n\u2022\tManual vs. Automatic transmission\r\n\u2022\tClutch vs. Torque Converter\r\n\u2022\tAuto-Shift in manual transmission\r\n\u2022\tDifferential Lock\r, three levels: axles, center, full\n\u2022\tEngine Stall\r\n\u2022\tDriver Assists: ABS, ESC, TCS, ASR\r\n\u2022\tSteering Assist\r\n\r\nMore info on Vehicle Physics Pro:\r\n\r\n    vehiclephysics.com\r\n   @vehiclephysics\r\n"
 --- !u!222 &1541013436852820215
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11828,9 +11811,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>ASR - Anti-Spin Regulation</b>
 
-        Prevents a drive wheel at
-        one side of the differential to spin faster than the other wheel by engaging
-        the brake in the first one.'
+        Prevents a drive wheel at one side of the differential to spin faster than the other wheel by engaging the brake in the first one.'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -11945,8 +11926,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>Vehicle Setup</b>
 
-        Configure several parameters of the vehicle
-        such as AWD / 2WD, transmission, auto-shift, differential, etc.'
+        Configure several parameters of the vehicle such as AWD / 2WD, transmission, auto-shift, differential, etc.'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -12074,9 +12054,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>ESC - Electronic Stability Control</b>
 
-        Helps to minimize
-        the loss of control on oversteer and understeer by applying individual brakes
-        to specific wheels.'
+        Helps to minimize the loss of control on oversteer and understeer by applying individual brakes to specific wheels.'
       objectReference: {fileID: 0}
     - target: {fileID: 6825728240663273301, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_Pivot.x
@@ -12770,6 +12748,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -12882,8 +12861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "<b>START</b>\t\tLong-click to start the engine\n<b>ACC-ON</b>\t\tAccessory
-    and car are running\n<b>OFF</b>\t\t\tSwitches the car off"
+  m_Text: "<b>START</b>\t\tLong-click to start the engine\n<b>ACC-ON</b>\t\tAccessory and car are running\n<b>OFF</b>\t\t\tSwitches the car off"
 --- !u!114 &2375899920371351851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13484,10 +13462,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "<b>M</b>\t\tManual\t\tShift gears with Tab/Caps-Lock\n<b>P</b>\t\tPark\t\t\tPress
-    brake to enter or leave the Park mode\n<b>R</b>\t\tReverse\t\tReverse gear\n<b>N</b>\t\tNeutral\t\tNeutral
-    gear\n<b>D</b>\t\tDrive\t\t\tForward gears are engaged automatically\n<b>L</b>\t\tLow\t\t\t\tEngages
-    first gear only"
+  m_Text: "<b>M</b>\t\tManual\t\tShift gears with Tab/Caps-Lock\n<b>P</b>\t\tPark\t\t\tPress brake to enter or leave the Park mode\n<b>R</b>\t\tReverse\t\tReverse gear\n<b>N</b>\t\tNeutral\t\tNeutral gear\n<b>D</b>\t\tDrive\t\t\tForward gears are engaged automatically\n<b>L</b>\t\tLow\t\t\t\tEngages first gear only"
 --- !u!1 &4372986567211932555
 GameObject:
   m_ObjectHideFlags: 0
@@ -16311,8 +16286,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: '<b>ABS - Anti-lock Braking System</b>
 
-        Prevents the wheels
-        from locking up while braking by reducing brake pressure on them.'
+        Prevents the wheels from locking up while braking by reducing brake pressure on them.'
       objectReference: {fileID: 0}
     - target: {fileID: 6722188745014530887, guid: e5682ca1fe94a03449dc3d9ac69945f7, type: 3}
       propertyPath: m_FontData.m_MaxSize
@@ -16674,6 +16648,7 @@ Canvas:
   m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -17123,21 +17098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7000201978217335538, guid: 06ccb6ed0e7344e42b14f8b1b4865461, type: 3}
       propertyPath: m_Text
-      value: "<size=18><b>Keyboard</b>\r</size>\n\n<b>Startup</b>\r\n\nK\t\t\t\t\t\t\t\t\t\tIgnition
-        Key:\r\n\t\t\t\t\t\t\t\t\t\t\u2022\tPress once to move the key from \"Off\"
-        to \"Acc-On\"\r\n\t\t\t\t\t\t\t\t\t\t\u2022\tPress and hold to Start the
-        engine\r\nCtrl+K\t\t\t\t\t\t\tSwitch engine off\r\n\n<b>Driving</b>\r\n\nArrows
-        / WSAD\t\tThrottle, Brake, Steering\r\nSpace\t\t\t\t\t\t\tHandbrake\r\nCtrl+Space\t\t\t\tToggle
-        parking brake\r\nShift\t\t\t\t\t\t\t\tClutch\r\n\n<b>Manual Transmission</b>\r\n\nTab\t\t\t\t\t\t\t\tGear
-        Shift Up\r\nCaps-Lock\t\t\t\t\tGear Shift Down\r\nN\t\t\t\t\t\t\t\t\t\tNeutral
-        gear\r\nR\t\t\t\t\t\t\t\t\t\tEngage Reverse gear\r\n1..5\t\t\t\t\t\t\t\tEngage
-        specific gear\r\n\r\n<b>Automatic Transmission [M P R N D L]</b>\r\n\nPage-Up\t\t\t\t\t\tPrevious
-        Gear Mode\r\nPage-Down\t\t\t\tNext Gear Mode\r\nR\t\t\t\t\t\t\t\t\t\tReverse
-        Mode [R]\r\n1\t\t\t\t\t\t\t\t\t\tDrive mode [D]\r\nTab\t\t\t\t\t\t\t\tGear
-        Shift Up ([M] mode)\r\nCaps-Lock\t\t\t\t\tGear Shift Down ([M] mode)\r\n\n\t\tNote:
-        Entering or leaving the Park mode [P] requires the brakes to be pressed\r.\n\n<b>Demo</b>\r\n\nEsc\t\t\t\t\t\t\t\t\tDemo
-        options (Reset, Quit)\nReturn\t\t\t\t\t\t\tReset car (i.e. if rolls over)\r\n\rC,
-        F1-F4\t\t\t\t\t\tChange camera\nT\t\t\t\t\t\t\t\t\t\tToggle slow motion mode\r"
+      value: "<size=18><b>Keyboard</b>\r</size>\n\n<b>Startup</b>\r\n\nK\t\t\t\t\t\t\t\t\t\tIgnition Key:\r\n\t\t\t\t\t\t\t\t\t\t\u2022\tPress once to move the key from \"Off\" to \"Acc-On\"\r\n\t\t\t\t\t\t\t\t\t\t\u2022\tPress and hold to Start the engine\r\nCtrl+K\t\t\t\t\t\t\tSwitch engine off\r\n\n<b>Driving</b>\r\n\nArrows / WSAD\t\tThrottle, Brake, Steering\r\nSpace\t\t\t\t\t\t\tHandbrake\r\nCtrl+Space\t\t\t\tToggle parking brake\r\nShift\t\t\t\t\t\t\t\tClutch\r\n\n<b>Manual Transmission</b>\r\n\nTab\t\t\t\t\t\t\t\tGear Shift Up\r\nCaps-Lock\t\t\t\t\tGear Shift Down\r\nN\t\t\t\t\t\t\t\t\t\tNeutral gear\r\nR\t\t\t\t\t\t\t\t\t\tEngage Reverse gear\r\n1..5\t\t\t\t\t\t\t\tEngage specific gear\r\n\r\n<b>Automatic Transmission [M P R N D L]</b>\r\n\nPage-Up\t\t\t\t\t\tPrevious Gear Mode\r\nPage-Down\t\t\t\tNext Gear Mode\r\nR\t\t\t\t\t\t\t\t\t\tReverse Mode [R]\r\n1\t\t\t\t\t\t\t\t\t\tDrive mode [D]\r\nTab\t\t\t\t\t\t\t\tGear Shift Up ([M] mode)\r\nCaps-Lock\t\t\t\t\tGear Shift Down ([M] mode)\r\n\n\t\tNote: Entering or leaving the Park mode [P] requires the brakes to be pressed\r.\n\n<b>Demo</b>\r\n\nEsc\t\t\t\t\t\t\t\t\tDemo options (Reset, Quit)\nReturn\t\t\t\t\t\t\tReset car (i.e. if rolls over)\r\n\rC, F1-F4\t\t\t\t\t\tChange camera\nT\t\t\t\t\t\t\t\t\t\tToggle slow motion mode\r"
       objectReference: {fileID: 0}
     - target: {fileID: 7000201978217335538, guid: 06ccb6ed0e7344e42b14f8b1b4865461, type: 3}
       propertyPath: m_FontData.m_FontSize

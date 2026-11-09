@@ -20,8 +20,8 @@ public class CSVExporter : MonoBehaviour
     {
         if (observer == null)
         {
-            // Unity 6 compatibility: use FindFirstObjectByType instead of FindObjectOfType
-            observer = FindFirstObjectByType<WorkSamplingObserver>();
+            // Unity 6 compatibility: use FindAnyObjectByType
+            observer = FindAnyObjectByType<WorkSamplingObserver>();
         }
 
         // Create export folder if it doesn't exist
