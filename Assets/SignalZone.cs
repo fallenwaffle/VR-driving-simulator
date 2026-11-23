@@ -1,173 +1,166 @@
 using UnityEngine;
 
 /// <summary>
-/// SignalZone - Trigger zone for traffic signals (stop signs, traffic lights, etc.)
-/// Detects when the car enters/exits the zone and evaluates signal compliance.
+/// SignalZone - trigger box on the road (signal / hazard zone).
+/// Compliance rule: the car must ENTER the zone at or below speedLimitKmh (+ toleranceKmh).
+/// One result is recorded per zone per run, when the car leaves the zone (or the run ends inside it).
+/// Warning signs (red/yellow diamonds + orange stripe) are built at the zone entry so the zone is
+/// visible from far away in clear weather and hidden by fog.
 /// </summary>
 public class SignalZone : MonoBehaviour
 {
-    [Header("Signal Settings")]
-    public string signalType = "Stop Sign"; // Stop Sign, Traffic Light, etc.
-    public float requiredStopDuration = 3f; // Seconds to stop for compliance
-    public float stopSpeedThreshold = 5f; // km/h - speed below which counts as stopped
+    [Header("Zone Settings")]
+    public string zoneName = "Zone";
+    public int zoneIndex = 1;
+    public string signalType = "Hazard Zone";
+    public float speedLimitKmh = 30f;
+    public float toleranceKmh = 2f;
 
-    [Header("Debug Visualization")]
-    public Color gizmoColor = Color.yellow;
+    [Header("Debug")]
     public bool showGizmos = true;
 
-    private WorkSamplingObserver observer;
-    private bool carInZone = false;
-    private float zoneEnterTime;
-    private float timeStopped = 0f;
-    private bool hasComplied = false;
+    int contacts;
+    bool inside;
+    bool counted;
+    bool passedThisRun;
+    float entryTime, entrySpeed, maxSpeed;
 
-    private void Start()
+    public bool IsInside { get { return inside; } }
+    public bool PassedThisRun { get { return passedThisRun; } }
+
+    public void ResetForRun()
     {
-        // Find the WorkSamplingObserver in the scene
-        // Unity 6 compatibility: use FindAnyObjectByType
-        observer = FindAnyObjectByType<WorkSamplingObserver>();
+        passedThisRun = false;
+        counted = false;
+    }
 
-        if (observer == null)
+    bool IsCar(Collider other)
+    {
+        var mgr = ExperimentManager.Instance;
+        if (mgr == null || mgr.carRigidbody == null) return false;
+        var rb = other.GetComponent<Rigidbody>();
+        return rb != null && rb == mgr.carRigidbody;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!IsCar(other)) return;
+        contacts++;
+        if (contacts == 1) BeginPass();
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (!inside || !counted || !IsCar(other)) return;
+        var rb = other.GetComponent<Rigidbody>();
+        float v = rb != null ? rb.linearVelocity.magnitude * 3.6f : 0f;
+        if (v > maxSpeed) maxSpeed = v;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!IsCar(other)) return;
+        contacts = Mathf.Max(0, contacts - 1);
+        if (contacts == 0) EndPass();
+    }
+
+    void BeginPass()
+    {
+        inside = true;
+        var mgr = ExperimentManager.Instance;
+        if (mgr == null || !mgr.IsRunning || passedThisRun) { counted = false; return; }
+
+        counted = true;
+        entryTime = mgr.RunTime;
+        entrySpeed = mgr.carRigidbody.linearVelocity.magnitude * 3.6f;
+        maxSpeed = entrySpeed;
+        if (mgr.observer != null) mgr.observer.EnterZone(this);
+    }
+
+    void EndPass()
+    {
+        inside = false;
+        var mgr = ExperimentManager.Instance;
+        if (mgr != null && mgr.observer != null) mgr.observer.ExitZone(this);
+        if (!counted || mgr == null) return;
+        counted = false;
+        passedThisRun = true;
+
+        mgr.ReportZone(new ZoneResult
         {
-            Debug.LogWarning("[SignalZone] No WorkSamplingObserver found in scene. Signal tracking may not work.", this);
+            condition = mgr.CurrentCondition,
+            zoneName = zoneName,
+            zoneIndex = zoneIndex,
+            entryTime = entryTime,
+            entrySpeedKmh = entrySpeed,
+            maxSpeedKmh = maxSpeed,
+            limitKmh = speedLimitKmh,
+            compliant = entrySpeed <= speedLimitKmh + toleranceKmh
+        });
+    }
+
+    /// <summary>Called by the manager when the run ends while the car is still inside the zone.</summary>
+    public void FinalizePass()
+    {
+        if (inside && counted) EndPass();
+    }
+
+    // ---------------------------------------------------------------- visuals
+    public static void BuildVisuals(Transform zone, float width, float depth)
+    {
+        Color red = new Color(0.85f, 0.08f, 0.08f);
+        Color yellow = new Color(1f, 0.85f, 0.1f);
+        Color grey = new Color(0.35f, 0.35f, 0.38f);
+        Color orange = new Color(1f, 0.5f, 0.05f);
+
+        // road stripes at entry (orange) and exit (white)
+        Piece(zone, "EntryStripe", new Vector3(0, 0.05f, -depth * 0.5f), new Vector3(width, 0.04f, 1.0f), Quaternion.identity, orange);
+        Piece(zone, "ExitStripe", new Vector3(0, 0.05f, depth * 0.5f), new Vector3(width, 0.04f, 0.5f), Quaternion.identity, Color.white);
+
+        // tall warning signs on both sides of the road, just before the entry
+        for (int i = 0; i < 2; i++)
+        {
+            float side = i == 0 ? -1f : 1f;
+            float x = side * (width * 0.5f + 1.5f);
+            float z = -depth * 0.5f - 1f;
+            Piece(zone, "Pole" + i, new Vector3(x, 2.5f, z), new Vector3(0.2f, 5f, 0.2f), Quaternion.identity, grey);
+            Quaternion diamond = Quaternion.Euler(0, 0, 45f);
+            Piece(zone, "SignRed" + i, new Vector3(x, 5.6f, z), new Vector3(2.0f, 2.0f, 0.15f), diamond, red);
+            Piece(zone, "SignYellow" + i, new Vector3(x, 5.6f, z - 0.02f), new Vector3(1.35f, 1.35f, 0.15f), diamond, yellow);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    static void Piece(Transform parent, string name, Vector3 localPos, Vector3 scale, Quaternion localRot, Color color)
     {
-        if (other.CompareTag("Player") || other.GetComponent<Rigidbody>() != null)
-        {
-            if (!carInZone)
-            {
-                carInZone = true;
-                zoneEnterTime = Time.time;
-                timeStopped = 0f;
-                hasComplied = false;
-
-                Debug.Log($"[SignalZone] Car entered {signalType} zone at {Time.time:F2}s");
-
-                // Notify observer
-                if (observer != null)
-                {
-                    observer.SetCurrentSignalZone(this);
-                }
-            }
-        }
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        go.name = name;
+        var col = go.GetComponent<Collider>();
+        if (col != null) { if (Application.isPlaying) Destroy(col); else DestroyImmediate(col); }
+        go.transform.SetParent(parent, false);
+        go.transform.localPosition = localPos;
+        go.transform.localRotation = localRot;
+        go.transform.localScale = scale;
+        go.GetComponent<Renderer>().sharedMaterial = MakeMaterial(color);
     }
 
-    private void OnTriggerStay(Collider other)
+    static Material MakeMaterial(Color c)
     {
-        if (carInZone && (other.CompareTag("Player") || other.GetComponent<Rigidbody>() != null))
-        {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                // Unity 6 compatibility: use linearVelocity
-                float speedKmh = rb.linearVelocity.magnitude * 3.6f;
-
-                if (speedKmh < stopSpeedThreshold)
-                {
-                    timeStopped += Time.deltaTime;
-
-                    if (timeStopped >= requiredStopDuration && !hasComplied)
-                    {
-                        hasComplied = true;
-                        Debug.Log($"[SignalZone] Car complied with {signalType} (stopped for {timeStopped:F1}s)");
-                    }
-                }
-            }
-        }
+        Shader s = Shader.Find("Universal Render Pipeline/Lit");
+        if (s == null) s = Shader.Find("Standard");
+        if (s == null) s = Shader.Find("Unlit/Color");
+        var m = new Material(s);
+        if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", c);
+        if (m.HasProperty("_Color")) m.SetColor("_Color", c);
+        return m;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (carInZone && (other.CompareTag("Player") || other.GetComponent<Rigidbody>() != null))
-        {
-            carInZone = false;
-
-            Debug.Log($"[SignalZone] Car exited {signalType} zone. Total stopped: {timeStopped:F1}s, Complied: {hasComplied}");
-
-            // Clear from observer
-            if (observer != null)
-            {
-                observer.SetCurrentSignalZone(null);
-            }
-        }
-    }
-
-    public bool IsCarInZone(GameObject car)
-    {
-        return carInZone;
-    }
-
-    public bool CheckCompliance(float speedKmh, WorkSamplingObserver.DriverState state)
-    {
-        // Compliance formula: must stop for required duration when in zone
-        // Special case: if not stopped, cannot be compliant
-        if (speedKmh > stopSpeedThreshold)
-        {
-            return false;
-        }
-
-        return hasComplied;
-    }
-
-    public string GetSignalType()
-    {
-        return signalType;
-    }
-
-    public float GetTimeStopped()
-    {
-        return timeStopped;
-    }
-
-    public bool HasComplied()
-    {
-        return hasComplied;
-    }
-
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         if (!showGizmos) return;
-
-        Collider col = GetComponent<Collider>();
-        if (col != null)
-        {
-            Gizmos.color = gizmoColor;
-            if (col is BoxCollider)
-            {
-                BoxCollider box = col as BoxCollider;
-                Gizmos.matrix = transform.localToWorldMatrix;
-                Gizmos.DrawWireCube(box.center, box.size);
-            }
-            else if (col is SphereCollider)
-            {
-                SphereCollider sphere = col as SphereCollider;
-                Gizmos.DrawWireSphere(transform.position + sphere.center, sphere.radius);
-            }
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (!showGizmos) return;
-
-        Collider col = GetComponent<Collider>();
-        if (col != null)
-        {
-            Gizmos.color = Color.green;
-            if (col is BoxCollider)
-            {
-                BoxCollider box = col as BoxCollider;
-                Gizmos.matrix = transform.localToWorldMatrix;
-                Gizmos.DrawWireCube(box.center, box.size);
-            }
-            else if (col is SphereCollider)
-            {
-                SphereCollider sphere = col as SphereCollider;
-                Gizmos.DrawWireSphere(transform.position + sphere.center, sphere.radius);
-            }
-        }
+        var box = GetComponent<BoxCollider>();
+        if (box == null) return;
+        Gizmos.color = Color.yellow;
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(box.center, box.size);
     }
 }

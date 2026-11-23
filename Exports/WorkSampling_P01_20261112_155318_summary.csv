@@ -1,0 +1,5 @@
+﻿Participant,Condition,Metric,Count,N,Proportion,CI95_HalfWidth_E,CI95_Lower,CI95_Upper
+P01,Clear,NormalCruising,0,1,0.0000,0.0000,0.0000,0.0000
+P01,Clear,CautiousControl,1,1,1.0000,0.0000,1.0000,1.0000
+P01,Clear,IdlingDelay,0,1,0.0000,0.0000,0.0000,0.0000
+P01,Clear,UnsafeViolation,0,1,0.0000,0.0000,0.0000,0.0000

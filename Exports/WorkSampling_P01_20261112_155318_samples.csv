@@ -1,0 +1,2 @@
+﻿Participant,Condition,SampleNo,TimeInRun_s,Speed_kmh,Accel_ms2,Brake,Throttle,State,SpeedLimit_kmh,InZone,ZoneName
+P01,Clear,1,2.51,3.27,0.69,0.00,0.00,CautiousControl,50,False,None

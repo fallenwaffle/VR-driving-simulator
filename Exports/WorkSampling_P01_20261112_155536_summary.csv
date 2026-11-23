@@ -1,0 +1,9 @@
+﻿Participant,Condition,Metric,Count,N,Proportion,CI95_HalfWidth_E,CI95_Lower,CI95_Upper
+P01,Clear,NormalCruising,5,23,0.2174,0.1686,0.0488,0.3860
+P01,Clear,CautiousControl,5,23,0.2174,0.1686,0.0488,0.3860
+P01,Clear,IdlingDelay,12,23,0.5217,0.2042,0.3176,0.7259
+P01,Clear,UnsafeViolation,1,23,0.0435,0.0833,0.0000,0.1268
+P01,Fog,NormalCruising,2,14,0.1429,0.1833,0.0000,0.3262
+P01,Fog,CautiousControl,4,14,0.2857,0.2366,0.0491,0.5224
+P01,Fog,IdlingDelay,8,14,0.5714,0.2592,0.3122,0.8307
+P01,Fog,UnsafeViolation,0,14,0.0000,0.0000,0.0000,0.0000

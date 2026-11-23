@@ -195,3 +195,6 @@ For any issues or suggestions:
 📌 GitHub: https://github.com/Tahaa-Mushtaq      
 📌 LinkedIn: https://www.linkedin.com/in/lakshya-singh-2833a2328/    
 ---
+
+## Work Sampling Experiment
+See [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the Clear-vs-Fog driving experiment (controls, protocol, analysis).

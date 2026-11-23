@@ -1,10 +1,10 @@
-# Unity 6.3 Upgrade Verification Checklist
+# Unity 6.6 Upgrade Verification Checklist
 
 ## Pre-Opening Checks
-- [ ] Unity 6.3.0f1 installed via Unity Hub with Android Build Support, OpenJDK, SDK/NDK
+- [ ] Unity 6.6 (6000.6.x) installed via Unity Hub with Android Build Support, OpenJDK, SDK/NDK
 - [ ] Backup of original project created (git branch `unity6-upgrade` created)
 
-## After Opening Project in Unity 6.3
+## After Opening Project in Unity 6.6
 
 ### 1. Compilation
 - [ ] 0 compile errors in Console
@@ -42,9 +42,9 @@
 - [ ] WorkSamplingObserver component can be added to car
 - [ ] SignalZone triggers work (car entering/exiting zones)
 - [ ] Random sampling occurs at 2-4.5 second intervals
-- [ ] 4-state classification works (Stopped <25, Low 25-30, Medium 30-60, High >60 km/h)
-- [ ] CSVExporter can export data to CSV files
-- [ ] CSV columns: Timestamp, Speed_Kmh, State, InSignalZone, SignalCompliant, SignalType
+- [ ] 4-state classification works (Cruising 25-60, Cautious 3-25 or in zone, Idle <3, Violation >60 km/h)
+- [ ] CSVExporter writes samples_ and summary_ CSV files (F10); F1/F2 switch Clear/Fog; entry at <=30 km/h counts as followed
+- [ ] Sample CSV columns: Run, SampleIndex, Time_s, Speed_kmh, State, InSignalZone, PosX, PosZ; summary CSV has N, counts, p1-p4 with 95% CI, TotalSignals, SignalsFollowed, Compliance_pct
 
 ### 7. Fog and Lighting
 - [ ] Fog settings preserved (RenderSettings: fog mode, density, color)
@@ -66,9 +66,9 @@
 - [ ] After VPP update, verify our fixes to PauseVehicle.cs still work
 
 ### 10. Package Versions
-Current versions (may auto-update when opening in Unity 6.3):
+Current versions (may auto-update when opening in Unity 6.6):
 - XR Interaction Toolkit: 2.6.3 (kept for compatibility - can upgrade to 3.x later if needed)
-- OpenXR: 1.13.2 (will likely auto-update to 1.16.1 for Unity 6.3)
+- OpenXR: 1.13.2 (will likely auto-update to 1.16.1 for Unity 6.6)
 - Input System: 1.11.2 (will likely auto-update)
 - Cinemachine: 2.10.3 (kept 2.x to avoid breaking changes)
 - TextMeshPro: 3.0.7 (may auto-update or be integrated into UGUI)
@@ -81,7 +81,7 @@ Current versions (may auto-update when opening in Unity 6.3):
 1. Open Unity Hub
 2. Add project: "The_Car_Simulator_-VR--main"
 3. Unity will detect version mismatch and prompt to upgrade
-4. Confirm the upgrade to Unity 6.3.0f1
+4. Confirm the upgrade to Unity 6.6 (6000.6.x)
 5. Wait for Unity to reimport assets (may take several minutes)
 
 ### 2. After First Open
@@ -131,7 +131,7 @@ To test the experimental scripts:
 After verification, commit the upgrade with:
 ```
 git add .
-git commit -m "Upgrade to Unity 6.3.0f1
+git commit -m "Upgrade to Unity 6.6 (6000.6.x)
 
 - Updated ProjectVersion.txt to 6000.3.0f1
 - Removed deprecated com.unity.collab-proxy from manifest
